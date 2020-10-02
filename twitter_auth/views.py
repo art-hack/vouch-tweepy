@@ -108,7 +108,6 @@ def home_timeline(request):
             if(len(url) != 0):
                 if((url[0]['display_url'][0:7] != 'twitter')):
                     refined_tweets.append(public_tweet)
-                    home().pretty_print(public_tweet)
                     try:
                         home().insert_db(public_tweet, url)
                     except:
