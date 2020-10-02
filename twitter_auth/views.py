@@ -1,7 +1,7 @@
 import tweepy  # API for twitter
 from django.http import *
-from django.shortcuts import render_to_response
-from django.core.urlresolvers import reverse
+from django.shortcuts import render
+from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.shortcuts import render
@@ -23,7 +23,7 @@ def main(request):
     if check_key(request):
         return HttpResponseRedirect(reverse('info'))
     else:
-        return render_to_response('twitter_auth/login.html')
+        return render(request,'twitter_auth/login.html')
 
 
 def unauth(request):
@@ -44,7 +44,7 @@ def info(request):
     if check_key(request):
         api = get_api(request)
         user = api.me()
-        return render_to_response('twitter_auth/info.html', {'username': user.name})
+        return render(request, 'twitter_auth/info.html', {'username': user.name})
     else:
         return HttpResponseRedirect(reverse('main'))
 
@@ -115,7 +115,7 @@ def home_timeline(request):
                         continue
         return render(request, 'twitter_auth/public_tweets.html', {'public_tweets': refined_tweets, 'username': user.name})
     else:
-        return render_to_response('twitter_auth/login.html')  # goto login
+        return render(request, 'twitter_auth/login.html')  # goto login
 
 
 def achievements_profile(request):
@@ -132,7 +132,7 @@ def achievements_profile(request):
         z = api.get_user(userid['user'])
         return render(request, 'twitter_auth/achievements.html', {'user': z, 'username': user.name})
     else:
-        return render_to_response('twitter_auth/login.html')  # goto login
+        return render(request, 'twitter_auth/login.html')  # goto login
 
 
 def achievements_domain(request):
@@ -152,7 +152,7 @@ def achievements_domain(request):
             count.append(query[i]['domain_count'])
         return render(request, 'twitter_auth/achievements_domain.html', {'query': filter_domain, 'count': count, 'username': user.name})
     else:
-        return render_to_response('twitter_auth/login.html')  # goto login
+        return render(request, 'twitter_auth/login.html')  # goto login
 
 
 def view_tweets(request):
@@ -194,4 +194,4 @@ def view_tweets(request):
 # 		return render(request, 'twitter_auth/post_tweet.html', {"tweet" : tweet})
 
 # 	else:
-# 		return render_to_response('twitter_auth/login.html') #goto login
+# 		return render('twitter_auth/login.html') #goto login
