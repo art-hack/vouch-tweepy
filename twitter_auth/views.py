@@ -1,18 +1,13 @@
+from datetime import date, timedelta
 import tweepy  # API for twitter
-from django.http import *
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import logout
-from django.contrib import messages
-from django.shortcuts import render
 from django.db.models import Count
-from twitter_auth.forms import PostTweet  # import form
-from twitter_auth.utils import *
+from twitter_auth.utils import CONSUMER_KEY, CONSUMER_SECRET, get_api
 from . import models
-import os
 from .home_timeline import home_timeline as home
-from datetime import datetime, date, timedelta
-import json
 
 
 def main(request):
@@ -22,8 +17,7 @@ def main(request):
     # if we haven't authorised yet, direct to login page
     if check_key(request):
         return HttpResponseRedirect(reverse('info'))
-    else:
-        return render(request,'twitter_auth/login.html')
+    return render(request, 'twitter_auth/login.html')
 
 
 def unauth(request):
@@ -31,7 +25,6 @@ def unauth(request):
     logout and remove all session data
     """
     if check_key(request):
-        api = get_api(request)
         request.session.clear()
         logout(request)
     return HttpResponseRedirect(reverse('main'))  # goto main()
@@ -45,8 +38,7 @@ def info(request):
         api = get_api(request)
         user = api.me()
         return render(request, 'twitter_auth/info.html', {'username': user.name})
-    else:
-        return HttpResponseRedirect(reverse('main'))
+    return HttpResponseRedirect(reverse('main'))
 
 
 def auth(request):
@@ -105,16 +97,16 @@ def home_timeline(request):
 
         for public_tweet in tweepy.Cursor(api.home_timeline, since_id=week_back).items(100):
             url = public_tweet.entities['urls']
-            if(len(url) != 0):
-                if((url[0]['display_url'][0:7] != 'twitter')):
+            if len(url) != 0:
+                if url[0]['display_url'][0:7] != 'twitter':
                     refined_tweets.append(public_tweet)
                     try:
                         home().insert_db(public_tweet, url)
                     except:
                         continue
-        return render(request, 'twitter_auth/public_tweets.html', {'public_tweets': refined_tweets, 'username': user.name})
-    else:
-        return render(request, 'twitter_auth/login.html')  # goto login
+        return render(request, 'twitter_auth/public_tweets.html',
+                      {'public_tweets': refined_tweets, 'username': user.name})
+    return render(request, 'twitter_auth/login.html')  # goto login
 
 
 def achievements_profile(request):
@@ -128,10 +120,10 @@ def achievements_profile(request):
         userid = max(query, key=lambda x: x['user_count'])
         api = get_api(request)
         user = api.me()
-        z = api.get_user(userid['user'])
-        return render(request, 'twitter_auth/achievements.html', {'user': z, 'username': user.name})
-    else:
-        return render(request, 'twitter_auth/login.html')  # goto login
+        profile_detail = api.get_user(userid['user'])
+        return render(request, 'twitter_auth/achievements.html',
+                      {'user': profile_detail, 'username': user.name})
+    return render(request, 'twitter_auth/login.html')  # goto login
 
 
 def achievements_domain(request):
@@ -149,9 +141,9 @@ def achievements_domain(request):
         for i in range(0, 3):
             filter_domain.append(query[i]['domain'])
             count.append(query[i]['domain_count'])
-        return render(request, 'twitter_auth/achievements_domain.html', {'query': filter_domain, 'count': count, 'username': user.name})
-    else:
-        return render(request, 'twitter_auth/login.html')  # goto login
+        return render(request, 'twitter_auth/achievements_domain.html',
+                      {'query': filter_domain, 'count': count, 'username': user.name})
+    return render(request, 'twitter_auth/login.html')  # goto login
 
 
 def view_tweets(request):
@@ -162,4 +154,6 @@ def view_tweets(request):
         api = get_api(request)
         user = api.me()
         query = models.Tweets.objects.all()
-        return render(request, 'twitter_auth/view_tweets.html', {'public_tweets': query, 'username': user.name})
+        return render(request, 'twitter_auth/view_tweets.html',
+                      {'public_tweets': query, 'username': user.name})
+    return render(request, 'twitter_auth/login.html')  # goto login
