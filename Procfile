@@ -1,0 +1,1 @@
+web: gunicorn djangotweepy.wsgi --log-file -
