@@ -78,8 +78,13 @@ python manage.py runserver
 ```
 
 ## Snapshots
+- First page with which the interacts, here user will log himself in.
 ![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/homepage.png)
+- Home page where all the routes are shown.
 ![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/main.png)
+- Output of 1st and 2nd link.
 ![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/tweets.png)
+- Profile who has tweeted mmost number of URLs.
 ![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/profile.png)
+- Top Domains which have been tweeted maximum times.
 ![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/domain.png)
