@@ -111,18 +111,10 @@ python manage.py runserver
     ├── models.py
     ├── __pycache__*
     ├── static
-    │   ├── achievement.png
-    │   ├── achievements.css
-    │   ├── rank1.png
-    │   ├── rank2.png
-    │   ├── rank3.png
-    │   ├── timeline.jpeg
-    │   ├── tweets.css
-    │   ├── twitter-2.png
-    │   ├── twitter-3.jpg
-    │   ├── twitter-4.jpeg
-    │   ├── twitter.jpg
-    │   └── twitter.png
+    │   ├── css
+    │   │   ├── achievements.css
+    │   │   └── tweets.css
+    │   └── media*
     ├── templates
     │   └── twitter_auth
     │       ├── achievements_domain.html
@@ -138,6 +130,7 @@ python manage.py runserver
     ├── urls.py
     ├── utils.py
     └── views.py
+
 ```
 
 

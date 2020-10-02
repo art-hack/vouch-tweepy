@@ -163,34 +163,3 @@ def view_tweets(request):
         user = api.me()
         query = models.Tweets.objects.all()
         return render(request, 'twitter_auth/view_tweets.html', {'public_tweets': query, 'username': user.name})
-
-
-# post tweet
-# def post_tweet(request):
-# 	tweet = "not logged in"
-# 	if check_key(request):
-# 		if request.method == "POST":
-# 			#Get the posted form
-# 			MyPostTweet = PostTweet(request.POST)
-# 			if MyPostTweet.is_valid():
-# 				#get user input
-# 				tweet = request.POST.get("input_tweet", "")
-# 				Approval=pf.is_profane(tweet)
-# 				 #applying profanity for explicit content detection
-# 				 #it won't allow post any explicit tweets
-# 				if Approval == True:
-# 				  messages.success(request, "Explicit Contect detected !")
-# 				  messages.success(request, "Please try again.")
-# 				else :
-# 				  messages.success(request, "Neat and clean !")
-# 				  messages.success(request, "Status Updating...")
-# 				  api = get_api(request)
-# 				  #update status
-# 				  api.update_status(tweet)
-# 		else:
-# 			MyPostTweet = PostTweet()
-
-# 		return render(request, 'twitter_auth/post_tweet.html', {"tweet" : tweet})
-
-# 	else:
-# 		return render('twitter_auth/login.html') #goto login

@@ -33,7 +33,8 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'twitter-tweepy.herokuapp.com'
+    'localhost',
+    'twitter-tweepy.herokuapp.com',
 ]
 
 
