@@ -78,4 +78,8 @@ python manage.py runserver
 ```
 
 ## Snapshots
-
+![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/homepage.png)
+![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/main.png)
+![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/tweets.png)
+![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/profile.png)
+![alt text](https://github.com/tds-1/vouch-tweepy/blob/master/images/domain.png)
